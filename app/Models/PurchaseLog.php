@@ -14,6 +14,13 @@ class PurchaseLog extends Model
 
     public function product(): BelongsTo
     {
-        return $this->belongsTo(PurchaseLog::class, 'product_id');
+        return $this->belongsTo(Product::class, 'product_id');
     }
+
+    public function customerPurchaseInfo()
+    {
+        return $this->belongsTo(CustomerPurchaseInfo::class, 'sales_id');
+    }
+
+
 }

@@ -16,7 +16,7 @@
                 Billing Page
             </div>
             <div class="card-body">
-                <form name="billing-post-form" id="billing-post-form" method="post" action="{{url('generate-bill')}}">
+                <form name="billing-post-form" id="billing-post-form" method="post" action="{{url('generate-bill')}}" target="_blank">
                     @csrf
                     <div class="form-group col-sm-4">
                         <label for="customer-email">Customer Email</label>
@@ -57,6 +57,7 @@
 
                     <button type="submit" class="btn btn-primary">Submit</button>
                     <a href="{{ url('/') }}" class="btn btn-secondary">Cancel</a>
+                    <a href="{{ route('customer.search') }}" class="btn btn-danger" target="_blank">Search Customer</a>
                 </form>
             </div>
         </div>

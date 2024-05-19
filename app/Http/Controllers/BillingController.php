@@ -205,4 +205,17 @@ class BillingController extends Controller
         $dompdf->render();
         $dompdf->stream('invoice.pdf');
     }
+
+    public function customerSearch(Request $request)
+    {
+        $customer = Customer::where(['email' => $request->input('customer-email')])->first();
+        $customerProduct = $customer->load(['purchaseInfo.purchaseHistory.product']);
+
+        return response()->json(['data' => $customerProduct]);
+    }
+
+    public function customerSearchPage()
+    {
+        return view('customerview');
+    }
 }

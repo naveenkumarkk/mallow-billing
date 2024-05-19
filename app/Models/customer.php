@@ -10,4 +10,9 @@ class Customer extends Model
     use HasFactory;
     protected $table = 'customer_mallow';
     protected $guarded = [];
+
+    public function purchaseInfo()
+    {
+        return $this->hasMany(CustomerPurchaseInfo::class);
+    }
 }

@@ -6,10 +6,7 @@ use App\Models\CustomerPurchaseInfo;
 use App\Models\Denomination;
 use Illuminate\Support\Carbon;
 use App\Jobs\SendInvoice;
-use App\Mail\CustomerEmail;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Mail;
 class BillingService
 {
     public static function calculateInitialLedgerBalance()

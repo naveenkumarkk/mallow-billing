@@ -13,13 +13,13 @@ class CustomerPurchaseInfo extends Model
     protected $table = 'customer_purchase_info';
     protected $guarded = [];
 
-    public function product(): BelongsTo
-    {
-        return $this->belongsTo(Product::class, 'product_id','id');
-    }
-
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class, 'customer_id','id');
+    }
+
+    public function purchaseHistory()
+    {
+        return $this->hasMany(PurchaseLog::class, 'sales_id');
     }
 }
