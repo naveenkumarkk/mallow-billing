@@ -7,19 +7,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Product extends Model
+class Denomination extends Model
 {
     use HasFactory;
-    protected $table = 'products';
+
+    protected $table = 'denominations';
     protected $guarded = [];
 
-    public function scopeActive(Builder $query) :Builder
+    public function scopeActive(Builder $query): Builder
     {
-        return $query->where('status',true);
+        return $query->where('status', true);
     }
 
-    public function purchaseLog(): HasMany
+    public function denominationLog(): HasMany
     {
-        return $this->hasMany(PurchaseLog::class, 'product_id');
+        return $this->hasMany(DenominationLog::class, 'denomination_id');
     }
 }
