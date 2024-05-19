@@ -190,6 +190,9 @@ class BillingController extends Controller
             'roundedTotalPurchasedAmount' => floor($totalPurchasedAmountWithTax)
         ];
 
+        // Send Invoice to the customer
+        BillingService::sendEmail($billingPage);
+
         return view('billing', $billingPage);
     }
 

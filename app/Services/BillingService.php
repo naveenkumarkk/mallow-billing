@@ -5,7 +5,11 @@ namespace App\Services;
 use App\Models\CustomerPurchaseInfo;
 use App\Models\Denomination;
 use Illuminate\Support\Carbon;
-
+use App\Jobs\SendInvoice;
+use App\Mail\CustomerEmail;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
 class BillingService
 {
     public static function calculateInitialLedgerBalance()
@@ -57,5 +61,14 @@ class BillingService
         }
 
         return $denominationBalanceCount;
+    }
+
+    public static function sendEmail($invoiceDetails)
+    {
+        $pdf = Pdf::loadView('pdf.invoice', ['invoiceDetails' => $invoiceDetails]);
+        $pdfPath = storage_path('app/public/invoice.pdf');
+        $pdf->save($pdfPath);
+      
+        SendInvoice::dispatch($invoiceDetails['customerEmail'], $invoiceDetails, $pdfPath);
     }
 }
