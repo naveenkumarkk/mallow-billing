@@ -83,6 +83,7 @@ Design a billing calculation page with the following features:
 ### Packages
 
 - **DomPdf**: Package used for generating PDF invoices.
+- **Barryvdh-DomPdf**: Package used for generating PDF invoices and attaching it to email.
 
 ### Views
 
