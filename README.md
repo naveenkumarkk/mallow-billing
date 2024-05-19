@@ -1,66 +1,94 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## Problem Description
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+### Database Schema Design
 
-## About Laravel
+Design a database schema for products with the following fields:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **name**: Name of the product.
+- **product ID**: Unique identifier for the product.
+- **available stocks**: Quantity of the product available in stock.
+- **price of one unit (float)**: Price of one unit of the product.
+- **tax percentage (float)**: Tax percentage applicable to the product.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+You can seed the values into the database or implement a CRUD page for adding these details.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Billing Calculation Page
 
-## Learning Laravel
+Design a billing calculation page with the following features:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. **Customer Information**:
+   - Provision to enter the customer's email who purchased the items.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+2. **Product Selection**:
+   - Add all products that the client bought to the bill by clicking on the "Add New" button.
+   - Dynamically add fields to enter a product ID and the quantity of the product purchased.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3. **Denominations**:
+   - Create a separator to separate the product section.
+   - Default denominations are provided to collect the count of denominations in each available value.
 
-## Laravel Sponsors
+4. **Payment Information**:
+   - Collect the amount that the customer gave for the bill.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+5. **Generate Bill**:
+   - Clicking on "Generate Bill" should calculate the values and display the information.
+   - Send the invoice to the customer’s email using a Queue.
 
-### Premium Partners
+6. **Balance Denomination Calculation**:
+   - Calculate the balance denomination that needs to be given to the customer based on the denominations available in the shop.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### View Previous Purchases
 
-## Contributing
+- View previous purchases made by the customer.
+- List all the purchases, and selecting one should show what items were purchased in that purchase.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Rules
 
-## Code of Conduct
+1. If there is any doubt, please reach out or implement based on assumptions and mention those assumptions.
+2. Code should be implemented using best practices and should be production-ready.
+3. More importance is given to Laravel and Database related concepts rather than views.
+4. There is no predefined solution from outside, so feel free to use any approach for designing the database schema and Laravel logic.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
+## Implementation Overview
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Tables
 
-## License
+- **customer_mallow**: Stores customer information.
+- **products**: Stores product information.
+- **denominations**: Stores denomination information.
+- **customer_purchase_info**: Maps customer IDs and stores customer bill details.
+- **product_logs**: Stores logs of products bought by customers.
+- **denomination_logs**: Stores logs of denomination counts and balances.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Models
+
+- **Customer**: Stores customer information.
+- **Products**: Stores product information.
+- **Denomination**: Stores denomination information.
+- **CustomerPurchaseInfo**: Maps customer IDs and stores bill details.
+- **ProductLog**: Stores logs of products bought.
+- **DenominationLog**: Stores logs of denomination counts and balances.
+
+### Services
+
+- **BillingService**: Handles calculations such as initial day ledger balance and change to be provided to the customer.
+- **CacheServiceProvider**: Caches product and denomination lists to reduce database load during system boot.
+
+### Features
+
+- **Cache**: Utilized to reduce database load by caching product and denomination lists.
+- **DomPdf**: Package used for generating and downloading invoices as PDFs.
+
+### Packages
+
+- **DomPdf**: Package used for generating PDF invoices.
+
+### Views
+
+- **costing.blade**: Initial webpage for inputting customer email and selecting products for purchase.
+- **billing.blade**: Displays the final bill calculation.
+
+### Additional Features
+
+- **jQuery**: Utilized for dynamic loading of responses into specific sections without full page reload.
