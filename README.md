@@ -46,7 +46,7 @@ Design a billing calculation page with the following features:
 
 1. If there is any doubt, please reach out or implement based on assumptions and mention those assumptions.
 2. Code should be implemented using best practices and should be production-ready.
-3. More importance is given to Laravel and Database related concepts rather than views.
+3. More importance is given to Laravel and database-related concepts rather than views.
 4. There is no predefined solution from outside, so feel free to use any approach for designing the database schema and Laravel logic.
 
 
@@ -58,7 +58,7 @@ Design a billing calculation page with the following features:
 - **products**: Stores product information.
 - **denominations**: Stores denomination information.
 - **customer_purchase_info**: Maps customer IDs and stores customer bill details.
-- **product_logs**: Stores logs of products bought by customers.
+- **purchase_logs**: Stores logs of products bought by customers.
 - **denomination_logs**: Stores logs of denomination counts and balances.
 
 ### Models
@@ -67,7 +67,7 @@ Design a billing calculation page with the following features:
 - **Products**: Stores product information.
 - **Denomination**: Stores denomination information.
 - **CustomerPurchaseInfo**: Maps customer IDs and stores bill details.
-- **ProductLog**: Stores logs of products bought.
+- **PurchaseLog**: Stores logs of products bought.
 - **DenominationLog**: Stores logs of denomination counts and balances.
 
 ### Services
